@@ -1,4 +1,9 @@
 import questionary
+from geopy import Nominatim
+
+#Initialises Geolocator to be used for automatic City finding
+geolocator=Nominatim(user_agent="Weather_Project_app")
+terminate_program=False
 
 
 def main_menu():
@@ -36,6 +41,7 @@ def Enter_City_Name():
     """
     Entered_City= questionary.text("Please enter the name of the city:").ask()
     print(f"You entered: {Entered_City}")
+    print(Get_City_Coordinates(Entered_City))
     return 
 
 def Enter_Latitude_and_Longitude():
@@ -46,6 +52,23 @@ def Enter_Latitude_and_Longitude():
     longitude = questionary.text("Please enter the longitude:").ask()
     print(f"You entered: {latitude}, {longitude}")
     return latitude, longitude
+
+def Get_City_Coordinates(city_name):
+    """
+    """
+
+    location=geolocator.geocode(city_name)
+    if location:
+        return {
+            "latitude": location.latitude,
+            "longitude": location.longitude
+        }
+    else:
+        print("City not found, Please Try Again")
+
+
+
+
 
 while not terminate_program:
     main_menu()
