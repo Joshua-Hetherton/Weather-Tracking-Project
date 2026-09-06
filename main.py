@@ -18,33 +18,34 @@ def main_menu():
             terminate_program=True
         
         case "Select from a Preset City":
-            Select_Preset_City()
+            select_preset_city()
 
         case "Enter a City":
-            Enter_City_Name()
+            enter_city_name()
 
         case "Enter Latitude and Longitude":
-            Enter_Latitude_and_Longitude()
+            enter_latitude_and_longitude()
             
 
-def Select_Preset_City():
+def select_preset_city():
     """
     Displays a list of preset cities for the user to select from.
     """
     City_Selection = questionary.select("Select a city from the list below:",
-                                        choices=["Southampton", "London", "New York", "Winchester"]).ask()
+                                        choices=["Southampton", "Winchester", "London", "New York"]).ask()
     print(f"You selected: {City_Selection}")
+    return get_city_coordinates(City_Selection)
 
-def Enter_City_Name():
+def enter_city_name():
     """
     Prompts the user to enter a city name.
     """
     Entered_City= questionary.text("Please enter the name of the city:").ask()
     print(f"You entered: {Entered_City}")
-    print(Get_City_Coordinates(Entered_City))
+    print(get_city_coordinates(Entered_City))
     return 
 
-def Enter_Latitude_and_Longitude():
+def enter_latitude_and_longitude():
     """
     Prompts the user to enter latitude and longitude coordinates.
     """
@@ -53,7 +54,7 @@ def Enter_Latitude_and_Longitude():
     print(f"You entered: {latitude}, {longitude}")
     return latitude, longitude
 
-def Get_City_Coordinates(city_name):
+def get_city_coordinates(city_name):
     """
     """
 
