@@ -1,30 +1,35 @@
 import questionary
 from geopy import Nominatim
+import pandas as pd
+ 
 
 #Initialises Geolocator to be used for automatic City finding
 geolocator=Nominatim(user_agent="Weather_Project_app")
 terminate_program=False
-
+city_selected=pd.DataFrame()
 
 def main_menu():
     """
     Displays the main menu and prompts the user to select an option.
     """
     main_menu_selection = questionary.select("What would you like to do?",
-                                             choices=["Select from a preset City", "Enter a City", "Enter Latitude and Longitude", "Exit"]).ask()
+                                             choices=["Select from a preset city", "Enter a City", "Enter Latitude and Longitude", "Exit"]).ask()
+
+    
+    
     match(main_menu_selection):
         case "Exit":
             global terminate_program
             terminate_program=True
         
-        case "Select from a Preset City":
-            select_preset_city()
+        case "Select from a preset city":
+            city_selected=select_preset_city()
 
         case "Enter a City":
-            enter_city_name()
+            city_selected=enter_city_name()
 
         case "Enter Latitude and Longitude":
-            enter_latitude_and_longitude()
+            city_selected=enter_latitude_and_longitude()
             
 
 def select_preset_city():
@@ -34,6 +39,7 @@ def select_preset_city():
     City_Selection = questionary.select("Select a city from the list below:",
                                         choices=["Southampton", "Winchester", "London", "New York"]).ask()
     print(f"You selected: {City_Selection}")
+
     return get_city_coordinates(City_Selection)
 
 def enter_city_name():
@@ -43,7 +49,9 @@ def enter_city_name():
     Entered_City= questionary.text("Please enter the name of the city:").ask()
     print(f"You entered: {Entered_City}")
     print(get_city_coordinates(Entered_City))
-    return 
+
+    return get_city_coordinates(Entered_City)
+    
 
 def enter_latitude_and_longitude():
     """
@@ -51,16 +59,35 @@ def enter_latitude_and_longitude():
     """
     latitude = questionary.text("Please enter the latitude:").ask()
     longitude = questionary.text("Please enter the longitude:").ask()
-    print(f"You entered: {latitude}, {longitude}")
-    return latitude, longitude
+    city=find_city_from_coordinates(latitude, longitude)
+    print(f"The nearest city to the coordinates ({latitude}, {longitude}) is: {city}")
+
+    return {
+        "city": city,
+        "latitude": latitude,
+        "longitude": longitude
+    }
+
+def find_city_from_coordinates(latitude, longitude):
+    """
+    Finds the nearest city to the coordinates provided by the user.
+    """
+    #Uses the opposite function of geocode to find the city from the given coordinates
+    location= geolocator.reverse((latitude, longitude))
+    if location:
+        return location.address
+    else:
+        return "City not found, Please Try Again"
 
 def get_city_coordinates(city_name):
     """
+    Gets the coordinates of a city.
     """
 
     location=geolocator.geocode(city_name)
     if location:
         return {
+            "city": city_name,
             "latitude": location.latitude,
             "longitude": location.longitude
         }
