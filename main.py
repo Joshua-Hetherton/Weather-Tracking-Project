@@ -68,8 +68,8 @@ def enter_latitude_and_longitude():
     """
     Prompts the user to enter latitude and longitude coordinates.
     """
-    latitude = questionary.text("Please enter the latitude:").ask()
-    longitude = questionary.text("Please enter the longitude:").ask()
+    latitude = int(questionary.text("Please enter the latitude:").ask())
+    longitude = int(questionary.text("Please enter the longitude:").ask())
     city=find_city_from_coordinates(latitude, longitude)
     print(f"The nearest city to the coordinates ({latitude}, {longitude}) is: {city}")
 
