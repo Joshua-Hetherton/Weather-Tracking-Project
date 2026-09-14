@@ -22,6 +22,7 @@ def main_menu():
         case "Exit":
             global terminate_program
             terminate_program=True
+            return
         
         case "Select from a preset city":
             city_selected=select_preset_city()
@@ -59,7 +60,6 @@ def enter_city_name():
     """
     Entered_City= questionary.text("Please enter the name of the city:").ask()
     print(f"You entered: {Entered_City}")
-    print(get_city_coordinates(Entered_City))
 
     return get_city_coordinates(Entered_City)
     
