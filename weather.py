@@ -24,9 +24,9 @@ def fetch_weather_data(latitude, longitude):
     #Using .head() for testing with a small amount of data
     # print(pd.DataFrame(response.json()).head())
     current_weather= pd.DataFrame([response.json()["current"]])
-    hourly_weather=pd.DataFrame([response.json()["hourly"]])
-
+    hourly_weather = pd.DataFrame(response.json()["hourly"])
+    
     return current_weather, hourly_weather
 
 
-# fetch_weather_data(51.5074, -0.1278)  # Example coordinates for London
+fetch_weather_data(51.5074, -0.1278)  # Example coordinates for London
