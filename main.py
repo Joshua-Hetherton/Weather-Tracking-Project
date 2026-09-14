@@ -93,6 +93,7 @@ def get_city_coordinates(city_name):
         }
     else:
         print("City not found, Please Try Again")
+        return None
 
 
 while not terminate_program:
