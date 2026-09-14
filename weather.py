@@ -29,4 +29,8 @@ def fetch_weather_data(latitude, longitude):
     return current_weather, hourly_weather
 
 
-fetch_weather_data(51.5074, -0.1278)  # Example coordinates for London
+if __name__ == "__main__":
+    # Example usage
+    current_weather, hourly_weather = fetch_weather_data(51.5074, -0.1278)  # Example coordinates for London
+    print(current_weather)
+    print(hourly_weather.head())
