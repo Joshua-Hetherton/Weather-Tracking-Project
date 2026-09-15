@@ -2,6 +2,7 @@ import questionary
 from geopy import Nominatim
 import pandas as pd
 import weather
+import display
  
 
 #Initialises Geolocator to be used for automatic City finding
@@ -35,13 +36,16 @@ def main_menu():
 
 
     current_city_weather, hourly_city_weather=weather.fetch_weather_data(city_selected["latitude"], city_selected["longitude"])
-    print(f"""Current Weather in {city_selected['city']}:
-    {current_city_weather}
-    -----------------
-    Hourly Weather:
-    {hourly_city_weather}
+    # print(f"""Current Weather in {city_selected['city']}:
+    # {current_city_weather}
+    # -----------------
+    # Hourly Weather:
+    # {hourly_city_weather}
 
-    """)
+    # """)
+    display.display_header(city_selected["city"])
+    display.display_current_weather(current_city_weather)
+    display.display_hourly_weather(hourly_city_weather)
             
 
 def select_preset_city():
