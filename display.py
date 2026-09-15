@@ -1,5 +1,6 @@
 from rich.console import Console
 from rich.table import Table
+from rich.align import Align
 import pandas as pd
 
 def display_header(city_name):
@@ -9,23 +10,23 @@ def display_current_weather(current_weather):
     table= Table(title="Current Weather", show_header=True, header_style="bold cyan")
 
     for key in current_weather.columns:
-        table.add_column(key, style="dim", justify="left")
+        table.add_column(key, style="", justify="left")
 
     for index, row in current_weather.iterrows():
         table.add_row(*[str(v) for v in row.tolist()])
 
-    console.print(table)
+    console.print(Align.center(table))
 
 def display_hourly_weather(hourly_weather):
-    table= Table(title="Current Weather", show_header=True, header_style="bold cyan")
+    table= Table(title="Hourly Weather", show_header=True, header_style="bold cyan", row_styles=["white", "color(8)"])
 
     for key in hourly_weather.columns:
-        table.add_column(key, style="dim", justify="left")
+        table.add_column(key, style="", justify="left")
 
     for index, row in hourly_weather.iterrows():
         table.add_row(*[str(v) for v in row.tolist()])
 
-    console.print(table)
+    console.print(Align.center(table))
 
 
 console=Console()
