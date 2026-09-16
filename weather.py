@@ -8,6 +8,7 @@ def fetch_weather_data(latitude, longitude):
     params = {
         "latitude": latitude,
         "longitude": longitude,
+        "wind_speed_unit": "mph",
         "timezone": "GMT",
         "current": ["temperature_2m", "apparent_temperature", "precipitation", "cloud_cover", "wind_speed_10m", "wind_direction_10m", "soil_temperature_0cm"],
         "forecast_days":1,
