@@ -9,7 +9,7 @@ def display_header(city_name):
 
 def display_current_weather(current_weather):
     table= Table(title="Current Weather", show_header=True, header_style="bold cyan")
-    
+
     display_current=current_weather.copy()
     display_current.rename(columns={"time": "Time", "temperature_2m": "Temperature (°C)","apparent_temperature":"Apparent Temperature (°C)", "precipitation":"Percipitation (mm)", "cloud_cover":"Cloud Cover (%)", "wind_speed_10m":"Wind Speed (mph)", "wind_direction_10m":"Wind Direction (°)", "soil_temperature_0cm":"Soil Temperature (°C)"}, inplace=True)
 
@@ -38,6 +38,28 @@ def display_hourly_weather(hourly_weather):
 
 def display_graphs(hourly_weather):
     fig, ax = plt.subplots(2,2)
+
+    ax[0,0].plot(hourly_weather["time"].str[11:16], hourly_weather["temperature_2m"], color="red")
+    ax[0,0].set_title("Temperature (°C)")
+    ax[0,0].set_xlabel("Time")
+    ax[0,0].set_ylabel("Temperature (°C)")
+
+    ax[0,1].plot(hourly_weather["time"].str[11:16], hourly_weather["cloud_cover"], color="blue")
+    ax[0,1].set_title("Cloud Cover (%)")
+    ax[0,1].set_xlabel("Time")
+    ax[0,1].set_ylabel("Cloud Cover (%)")
+
+    ax[1,0].plot(hourly_weather["time"].str[11:16], hourly_weather["wind_speed_10m"], color="green")
+    ax[1,0].set_title("Wind Speed (mph)")
+    ax[1,0].set_xlabel("Time")
+    ax[1,0].set_ylabel("Wind Speed (mph)")
+
+    ax[1,1].plot(hourly_weather["time"].str[11:16], hourly_weather["precipitation"], color="purple")
+    ax[1,1].set_title("Percipitation (mm)")
+    ax[1,1].set_xlabel("Time")
+    ax[1,1].set_ylabel("Percipitation (mm)")
+    
+
     plt.show()
 
 

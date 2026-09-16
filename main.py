@@ -40,6 +40,8 @@ def main_menu():
     display.display_header(city_selected["city"])
     display.display_current_weather(current_city_weather)
     display.display_hourly_weather(hourly_city_weather)
+
+    display.display_graphs(hourly_city_weather)
             
 
 def select_preset_city():
