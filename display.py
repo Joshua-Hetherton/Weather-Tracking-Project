@@ -2,6 +2,7 @@ from rich.console import Console
 from rich.table import Table
 from rich.align import Align
 import pandas as pd
+import matplotlib.pyplot as plt
 
 def display_header(city_name):
     console.print(f"[white]Weather Forecast for [/white]\n [cyan]{city_name} [/cyan]", style="bold", justify="center")
@@ -31,6 +32,13 @@ def display_hourly_weather(hourly_weather):
 
     console.print(Align.center(table))
 
+def display_graphs(hourly_weather):
+    fig, ax = plt.subplots(2,2)
+    plt.show()
+
+
+
+
 
 console=Console()
 
@@ -57,3 +65,4 @@ if __name__ == "__main__":
     display_header("London")
     display_current_weather(test_current_weather)
     display_hourly_weather(test_hourly_weather)
+    display_graphs(test_hourly_weather)
