@@ -9,9 +9,11 @@ def display_header(city_name):
 
 def display_current_weather(current_weather):
     table= Table(title="Current Weather", show_header=True, header_style="bold cyan")
+    
+    display_current=current_weather.copy()
+    display_current.rename(columns={"time": "Time", "temperature_2m": "Temperature (°C)","apparent_temperature":"Apparent Temperature (°C)", "precipitation":"Percipitation (mm)", "cloud_cover":"Cloud Cover (%)", "wind_speed_10m":"Wind Speed (mph)", "wind_direction_10m":"Wind Direction (°)", "soil_temperature_0cm":"Soil Temperature (°C)"}, inplace=True)
 
-    current_weather.rename(columns={"time": "Time", "temperature_2m": "Temperature (°C)","apparent_temperature":"Apparent Temperature (°C)", "precipitation":"Percipitation (mm)", "cloud_cover":"Cloud Cover (%)", "wind_speed_10m":"Wind Speed (mph)", "wind_direction_10m":"Wind Direction (°)", "soil_temperature_0cm":"Soil Temperature (°C)"}, inplace=True)
-    for key in current_weather.columns:
+    for key in display_current.columns:
         table.add_column(key, style="", justify="left")
 
     for index, row in current_weather.iterrows():
@@ -22,8 +24,10 @@ def display_current_weather(current_weather):
 def display_hourly_weather(hourly_weather):
     table= Table(title="Hourly Weather", show_header=True, header_style="bold cyan", row_styles=["white", "color(8)"])
 
-    hourly_weather.rename(columns={"time": "Time", "temperature_2m": "Temperature (°C)","cloud_cover":"Cloud Cover (%)", "wind_speed_10m": "Wind Speed (mph)" ,"precipitation": "Percipitation (mm)"}, inplace=True)
-    for key in hourly_weather.columns:
+    display_hourly=hourly_weather.copy()
+    display_hourly.rename(columns={"time": "Time", "temperature_2m": "Temperature (°C)","cloud_cover":"Cloud Cover (%)", "wind_speed_10m": "Wind Speed (mph)" ,"precipitation": "Percipitation (mm)"}, inplace=True)
+
+    for key in display_hourly.columns:
 
         table.add_column( key, style="", justify="left")
 
