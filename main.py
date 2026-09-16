@@ -8,7 +8,7 @@ import display
 #Initialises Geolocator to be used for automatic City finding
 geolocator=Nominatim(user_agent="Weather_Project_app")
 terminate_program=False
-city_selected=pd.DataFrame()
+
 
 def main_menu():
     """
@@ -36,13 +36,7 @@ def main_menu():
 
 
     current_city_weather, hourly_city_weather=weather.fetch_weather_data(city_selected["latitude"], city_selected["longitude"])
-    # print(f"""Current Weather in {city_selected['city']}:
-    # {current_city_weather}
-    # -----------------
-    # Hourly Weather:
-    # {hourly_city_weather}
 
-    # """)
     display.display_header(city_selected["city"])
     display.display_current_weather(current_city_weather)
     display.display_hourly_weather(hourly_city_weather)
@@ -52,18 +46,16 @@ def select_preset_city():
     """
     Displays a list of preset cities for the user to select from.
     """
-    City_Selection = questionary.select("Select a city from the list below:",
+    city_selection = questionary.select("Select a city from the list below:",
                                         choices=["Southampton", "Winchester", "London", "New York"]).ask()
-    print(f"You selected: {City_Selection}")
 
-    return get_city_coordinates(City_Selection)
+    return get_city_coordinates(city_selection)
 
 def enter_city_name():
     """
     Prompts the user to enter a city name.
     """
     Entered_City= questionary.text("Please enter the name of the city:").ask()
-    print(f"You entered: {Entered_City}")
 
     return get_city_coordinates(Entered_City)
     
