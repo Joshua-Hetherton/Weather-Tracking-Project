@@ -11,8 +11,13 @@ terminate_program=False
 
 
 def main_menu():
-    """
-    Displays the main menu and prompts the user to select an option.
+    """Displays the main menu and prompts the user to select an option.
+    Options include selecting a preset city, entering a city name, entering latitude and longitude, or exiting the program.
+
+
+    Returns:
+        None: This function does not return any value. It displays the main menu and handles user input.
+
     """
     main_menu_selection = questionary.select("What would you like to do?",
                                              choices=["Select from a preset city", "Enter a City", "Enter Latitude and Longitude", "Exit"]).ask()
@@ -45,17 +50,22 @@ def main_menu():
             
 
 def select_preset_city():
+    """Displays a list of preset cities for the user to select from.
+
+    Returns:
+        dict: A dictionary containing the selected city's name, latitude, and longitude.
     """
-    Displays a list of preset cities for the user to select from.
-    """
+
     city_selection = questionary.select("Select a city from the list below:",
                                         choices=["Southampton", "Winchester", "London", "New York"]).ask()
 
     return get_city_coordinates(city_selection)
 
 def enter_city_name():
-    """
-    Prompts the user to enter a city name.
+    """Prompts the user to enter a city name.
+
+    Returns:
+        dict: A dictionary containing the entered city's name, latitude, and longitude.
     """
     Entered_City= questionary.text("Please enter the name of the city:").ask()
 
@@ -63,8 +73,10 @@ def enter_city_name():
     
 
 def enter_latitude_and_longitude():
-    """
-    Prompts the user to enter latitude and longitude coordinates.
+    """Prompts the user to enter latitude and longitude coordinates.
+
+    Returns:
+        dict: A dictionary containing the entered coordinates and the nearest city.
     """
     latitude = float(questionary.text("Please enter the latitude:").ask())
     longitude = float(questionary.text("Please enter the longitude:").ask())
@@ -78,8 +90,13 @@ def enter_latitude_and_longitude():
     }
 
 def find_city_from_coordinates(latitude, longitude):
-    """
-    Finds the nearest city to the coordinates provided by the user.
+    """Finds the nearest city to the coordinates provided by the user.
+    Args:
+        latitude (float): The latitude coordinate.
+        longitude (float): The longitude coordinate.
+
+    Returns:
+        str: The name of the nearest city.
     """
     #Uses the opposite function of geocode to find the city from the given coordinates
     location= geolocator.reverse((latitude, longitude))
@@ -89,8 +106,12 @@ def find_city_from_coordinates(latitude, longitude):
         return "City not found, Please Try Again"
 
 def get_city_coordinates(city_name):
-    """
-    Gets the coordinates of a city.
+    """Gets the coordinates of a city.
+    Args:
+        city_name (str): The name of the city for which to get the coordinates.
+        
+    Returns:
+        dict: A dictionary containing the city's name, latitude, and longitude.
     """
 
     location=geolocator.geocode(city_name)

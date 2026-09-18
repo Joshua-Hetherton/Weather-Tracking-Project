@@ -5,9 +5,24 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 def display_header(city_name):
+    """
+    Displays the header for the weather forecast.
+    Args:
+        city_name (str): The name of the city for which to display the weather forecast.
+
+    Returns:
+        None: This function does not return any value. It prints the header to the console.
+    """
     console.print(f"[white]Weather Forecast for [/white]\n [cyan]{city_name} [/cyan]", style="bold", justify="center")
 
 def display_current_weather(current_weather):
+    """Displays the current weather data in a table format using the rich library.
+    Args:
+        current_weather (pd.DataFrame): A DataFrame containing the current weather data.
+
+    Returns:
+        None: This function does not return any value. It prints the table to the console.
+    """
     table= Table(title="Current Weather", show_header=True, header_style="bold cyan")
 
     display_current=current_weather.copy()
@@ -22,8 +37,17 @@ def display_current_weather(current_weather):
     console.print(Align.center(table))
 
 def display_hourly_weather(hourly_weather):
+    """Displays the hourly weather data in a table format using the rich library.
+    Args:
+        hourly_weather (pd.DataFrame): A DataFrame containing the hourly weather data.
+
+    Returns:
+        None: This function does not return any value. It prints the table to the console.
+    
+    """
     table= Table(title="Hourly Weather", show_header=True, header_style="bold cyan", row_styles=["white", "color(8)"])
 
+    #Copies the pandas Dataframe so that the original data wont be modified, which would have caused issues with the rest of the system
     display_hourly=hourly_weather.copy()
     display_hourly.rename(columns={"time": "Time", "temperature_2m": "Temperature (°C)","cloud_cover":"Cloud Cover (%)", "wind_speed_10m": "Wind Speed (mph)" ,"precipitation": "Percipitation (mm)"}, inplace=True)
 
@@ -31,12 +55,25 @@ def display_hourly_weather(hourly_weather):
 
         table.add_column( key, style="", justify="left")
 
+    #Uses pandas iterrows to iterate through the DataFrame. Each row mapped, and converts each value to a string to then iterate over in a normal list
     for index, row in hourly_weather.iterrows():
         table.add_row(*[str(v) for v in row.tolist()])
 
     console.print(Align.center(table))
 
 def display_graphs(hourly_weather):
+    """Shows the graphs for the hourly weather data, including temperature, cloud cover, wind speed, and precipitation.
+    Uses matplotlib to create the graphs and display them in a 2x2 grid.
+    Graph also generates 
+
+    Args:
+        hourly_weather (pd.DataFrame): A DataFrame containing the hourly weather data.
+
+    Returns:
+        None: This function does not return any value. It displays the graphs to the console.
+        
+
+    """
     fig, ax = plt.subplots(2,2)
 
     #Graph for temperature throughout the day
