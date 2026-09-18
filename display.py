@@ -43,21 +43,30 @@ def display_graphs(hourly_weather):
     ax[0,0].set_title("Temperature (°C)")
     ax[0,0].set_xlabel("Time")
     ax[0,0].set_ylabel("Temperature (°C)")
+    #Added ticks to rotate the x-axis labels for better readability
+    ax[0,0].set_xticks(range(len(hourly_weather)))
+    ax[0,0].set_xticklabels(hourly_weather["time"].str[11:16], rotation=45)
 
     ax[0,1].plot(hourly_weather["time"].str[11:16], hourly_weather["cloud_cover"], color="blue")
     ax[0,1].set_title("Cloud Cover (%)")
     ax[0,1].set_xlabel("Time")
     ax[0,1].set_ylabel("Cloud Cover (%)")
+    ax[0,1].set_xticks(range(len(hourly_weather)))
+    ax[0,1].set_xticklabels(hourly_weather["time"].str[11:16], rotation=45)
 
     ax[1,0].plot(hourly_weather["time"].str[11:16], hourly_weather["wind_speed_10m"], color="green")
     ax[1,0].set_title("Wind Speed (mph)")
     ax[1,0].set_xlabel("Time")
     ax[1,0].set_ylabel("Wind Speed (mph)")
+    ax[1,0].set_xticks(range(len(hourly_weather)))
+    ax[1,0].set_xticklabels(hourly_weather["time"].str[11:16], rotation=45)
 
     ax[1,1].plot(hourly_weather["time"].str[11:16], hourly_weather["precipitation"], color="purple")
     ax[1,1].set_title("Percipitation (mm)")
     ax[1,1].set_xlabel("Time")
     ax[1,1].set_ylabel("Percipitation (mm)")
+    ax[1,1].set_xticks(range(len(hourly_weather)))
+    ax[1,1].set_xticklabels(hourly_weather["time"].str[11:16], rotation=45)
     
 
     plt.show()
