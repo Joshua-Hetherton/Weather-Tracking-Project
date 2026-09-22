@@ -14,18 +14,22 @@ def fetch_weather_data(latitude, longitude):
         "forecast_days":1,
         "hourly": ["temperature_2m", "cloud_cover", "wind_speed_10m", "precipitation"]
     }
+    response=None
+    try:
+        #Basic HTTP GET Request
+        response=requests.get(url, params=params)
 
-
-    #Basic HTTP GET Request
-    response=requests.get(url, params=params)
-
-    #200 means working, otherwise it is not working
-    print(response.status_code)
-
+    except requests.exceptions.RequestException as e:
+        print(f"An Error Occurred when trying to fetch the weather data of your selected location: {e}")
+        return None, None
+    
+    if response.status_code != 200:
+        print(f"Failed to fetch weather data. Status code: {response.status_code}")
+        return None, None
     #Using .head() for testing with a small amount of data
     # print(pd.DataFrame(response.json()).head())
     current_weather= pd.DataFrame([response.json()["current"]])
-    hourly_weather = pd.DataFrame(response.json()["hourly"])
+    hourly_weather = pd.DataFrame(response.json()["hourly"])    
     
     return current_weather, hourly_weather
 
